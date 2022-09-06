@@ -14,7 +14,7 @@ public class Listener implements ActionListener, MouseListener, MouseMotionListe
     Point end;
     JFileChooser jfc;
 
-    Listener(PaintCanvas canvas){
+    Listener(PaintCanvas canvas) {
         c = null;
         type = ShapeType.MOUSE;
         this.canvas = canvas;
@@ -22,86 +22,86 @@ public class Listener implements ActionListener, MouseListener, MouseMotionListe
         end = new Point();
         jfc = new JFileChooser();
         jfc.setAcceptAllFileFilterUsed(false);
-        FileFilter filter = new FileNameExtensionFilter("miniCAD file","obj");
+        FileFilter filter = new FileNameExtensionFilter("miniCAD file", "obj");
         jfc.setFileFilter(filter);
-        jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);              
+        jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
     }
 
     public void actionPerformed(ActionEvent e) {
-		cmd = e.getActionCommand();
+        cmd = e.getActionCommand();
         System.out.println(cmd);
         switch (cmd) {
-            case "—°‘Òπ§æﬂ":
+            case "ÈÄâÊã©Â∑•ÂÖ∑":
                 type = ShapeType.MOUSE;
                 break;
-            case "÷±œﬂ":
+            case "Áõ¥Á∫ø":
                 type = ShapeType.LINE;
                 break;
-            case "æÿ–Œ":
+            case "Áü©ÂΩ¢":
                 type = ShapeType.RECT;
-                break;            
-            case "‘≤":
+                break;
+            case "ÂúÜ":
                 type = ShapeType.OVAL;
                 break;
-            case "Œƒ±æøÚ":
-                input = JOptionPane.showInputDialog(null, "º¸»ÎŒƒ◊÷"," ‰»Î",JOptionPane.INFORMATION_MESSAGE);
-                if(input != null){
+            case "ÊñáÊú¨Ê°Ü":
+                input = JOptionPane.showInputDialog(null, "ÈîÆÂÖ•ÊñáÂ≠ó", "ËæìÂÖ•", JOptionPane.INFORMATION_MESSAGE);
+                if (input != null) {
                     type = ShapeType.INPUTBOX;
                     System.out.println(input);
                 }
                 break;
-            case "“∆≥˝":
+            case "ÁßªÈô§":
                 canvas.remove();
                 break;
-            case "∑≈¥Û":
+            case "ÊîæÂ§ß":
                 canvas.zoom_in();
                 break;
-            case "Àı–°":
+            case "Áº©Â∞è":
                 canvas.zoom_out();
                 break;
-            case "º”¥÷":
+            case "Âä†Á≤ó":
                 canvas.thicker();
                 break;
-            case "±‰œ∏":
+            case "ÂèòÁªÜ":
                 canvas.thinner();
                 break;
-            case "–¬Ω®(N)":
+            case "Êñ∞Âª∫(N)":
                 canvas.flush();
                 break;
-            case "¥Úø™(O)":
+            case "ÊâìÂºÄ(O)":
                 jfc.setSelectedFile(null);
-                jfc.showOpenDialog(null);  
+                jfc.showOpenDialog(null);
                 File openFile = jfc.getSelectedFile();
-                if(openFile == null){
-                    JOptionPane.showMessageDialog(null, "«Î—°‘ÒŒƒº˛£°", "¥ÌŒÛ", JOptionPane.ERROR_MESSAGE);
+                if (openFile == null) {
+                    JOptionPane.showMessageDialog(null, "ËØ∑ÈÄâÊã©Êñá‰ª∂ÔºÅ", "ÈîôËØØ", JOptionPane.ERROR_MESSAGE);
                     break;
                 }
                 try {
                     canvas.open(openFile);
                 } catch (Exception except) {
-                    JOptionPane.showMessageDialog(null, except.getMessage(), "¥ÌŒÛ", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, except.getMessage(), "ÈîôËØØ", JOptionPane.ERROR_MESSAGE);
                 }
                 break;
-            case "±£¥Ê(S)":
+            case "‰øùÂ≠ò(S)":
                 jfc.setSelectedFile(null);
                 jfc.showSaveDialog(null);
                 File saveFile = jfc.getSelectedFile();
-                if(saveFile == null){
-                    JOptionPane.showMessageDialog(null, "«Î—°‘Ò±£¥Ê¬∑æ∂£°", "¥ÌŒÛ", JOptionPane.ERROR_MESSAGE);
+                if (saveFile == null) {
+                    JOptionPane.showMessageDialog(null, "ËØ∑ÈÄâÊã©‰øùÂ≠òË∑ØÂæÑÔºÅ", "ÈîôËØØ", JOptionPane.ERROR_MESSAGE);
                     break;
                 }
-                if(!saveFile.getAbsolutePath().endsWith("obj")){
-	        		saveFile = new File(saveFile.getAbsolutePath()+".obj");
+                if (!saveFile.getAbsolutePath().endsWith("obj")) {
+                    saveFile = new File(saveFile.getAbsolutePath() + ".obj");
                 }
                 System.out.println(saveFile.getAbsolutePath());
                 try {
                     canvas.save(saveFile);
                 } catch (Exception except) {
                     System.out.println(except);
-                    JOptionPane.showMessageDialog(null, except.getMessage(), "¥ÌŒÛ", JOptionPane.ERROR_MESSAGE);
-                }                
+                    JOptionPane.showMessageDialog(null, except.getMessage(), "ÈîôËØØ", JOptionPane.ERROR_MESSAGE);
+                }
                 break;
-            case "ÕÀ≥ˆ(E)":
+            case "ÈÄÄÂá∫(E)":
                 System.exit(0);
                 break;
             default:
@@ -109,46 +109,46 @@ public class Listener implements ActionListener, MouseListener, MouseMotionListe
         }
 
         if (cmd.equals("")) {
-			JButton btn = (JButton) e.getSource();
-			c = btn.getBackground();
+            JButton btn = (JButton) e.getSource();
+            c = btn.getBackground();
             canvas.set_color(c);
-		}
-	}
+        }
+    }
 
     public void mouseClicked(MouseEvent e) {
         System.out.println("mouseClicked");
 
-	}
+    }
 
-	public void mousePressed(MouseEvent e) {
+    public void mousePressed(MouseEvent e) {
         System.out.println("mousePressed");
         start.move(e.getX(), e.getY());
-        if(type == ShapeType.MOUSE)
+        if (type == ShapeType.MOUSE)
             canvas.check(new Point(e.getX(), e.getY()));
-	}
+    }
 
     public void mouseEntered(MouseEvent e) {
-	
+
     }
 
-	public void mouseExited(MouseEvent e) {
-	
+    public void mouseExited(MouseEvent e) {
+
     }
 
-	public void mouseReleased(MouseEvent e) {
+    public void mouseReleased(MouseEvent e) {
         System.out.println("mouseReleased");
         end.move(e.getX(), e.getY());
-        if(type != ShapeType.MOUSE)
+        if (type != ShapeType.MOUSE)
             canvas.add(start, end, type, c, input);
         else
             canvas.move(start, end, true);
-	}
+    }
 
     public void mouseDragged(MouseEvent e) {
         end.move(e.getX(), e.getY());
-        if(type != ShapeType.MOUSE)
+        if (type != ShapeType.MOUSE)
             canvas.drawing(start, end, type, c, input);
-        else   
+        else
             canvas.move(start, end, false);
     }
 
@@ -156,31 +156,31 @@ public class Listener implements ActionListener, MouseListener, MouseMotionListe
 
     }
 
-
-	public void keyPressed(KeyEvent e) {
-		switch(e.getKeyCode()){
+    public void keyPressed(KeyEvent e) {
+        switch (e.getKeyCode()) {
             case KeyEvent.VK_LEFT:
                 canvas.move(-5, 0);
                 break;
             case KeyEvent.VK_RIGHT:
                 canvas.move(5, 0);
-                break;      
+                break;
             case KeyEvent.VK_UP:
                 canvas.move(0, -5);
-                break;      
+                break;
             case KeyEvent.VK_DOWN:
                 canvas.move(0, 5);
-                break;      
+                break;
             default:
                 break;
-        };
-	}
- 
-	public void keyReleased(KeyEvent e) {
+        }
+        ;
+    }
 
-	}
- 
-	public void keyTyped(KeyEvent e) {
+    public void keyReleased(KeyEvent e) {
+
+    }
+
+    public void keyTyped(KeyEvent e) {
 
     }
 }

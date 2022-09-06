@@ -1,6 +1,7 @@
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
+
 public class UI {
 	public static void main(String[] args) {
 		UI miniCAD = new UI();
@@ -9,56 +10,56 @@ public class UI {
 
 	public void initUI() {
 		JFrame mainFrame = new JFrame("miniCAD");
-		// ´´½¨´°Ìå
-		// ÉèÖÃ´óĞ¡ÊôĞÔ£¬Ê¹ÓÃ±ß¿ò²¼¾Ö
+		// åˆ›å»ºçª—ä½“
+		// è®¾ç½®å¤§å°å±æ€§ï¼Œä½¿ç”¨è¾¹æ¡†å¸ƒå±€
 		mainFrame.setSize(1600, 900);
 		mainFrame.setLayout(new BorderLayout());
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		// ´´½¨»­°å
+		// åˆ›å»ºç”»æ¿
 		PaintCanvas canvas = new PaintCanvas();
 		Listener ls = new Listener(canvas);
 		canvas.setBackground(Color.white);
-        canvas.addMouseListener(ls);
+		canvas.addMouseListener(ls);
 		canvas.addMouseMotionListener(ls);
 		canvas.addKeyListener(ls);
 
-		// ´´½¨ÈÎÎñÀ¸
+		// åˆ›å»ºä»»åŠ¡æ 
 		JMenuBar menuBar = new JMenuBar();
-        JMenu menu=new JMenu("ÎÄ¼ş(F)");
-        menu.setMnemonic(KeyEvent.VK_F);
-        JMenuItem item=new JMenuItem("ĞÂ½¨(N)",KeyEvent.VK_N);
-        item.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N,ActionEvent.CTRL_MASK));
+		JMenu menu = new JMenu("æ–‡ä»¶(F)");
+		menu.setMnemonic(KeyEvent.VK_F);
+		JMenuItem item = new JMenuItem("æ–°å»º(N)", KeyEvent.VK_N);
+		item.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, ActionEvent.CTRL_MASK));
 		item.addActionListener(ls);
-        menu.add(item);
-        item=new JMenuItem("´ò¿ª(O)",KeyEvent.VK_O);
-        item.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O,ActionEvent.CTRL_MASK));
+		menu.add(item);
+		item = new JMenuItem("æ‰“å¼€(O)", KeyEvent.VK_O);
+		item.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, ActionEvent.CTRL_MASK));
 		item.addActionListener(ls);
-        menu.add(item);
-        item=new JMenuItem("±£´æ(S)",KeyEvent.VK_S);
-        item.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S,ActionEvent.CTRL_MASK));
+		menu.add(item);
+		item = new JMenuItem("ä¿å­˜(S)", KeyEvent.VK_S);
+		item.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, ActionEvent.CTRL_MASK));
 		item.addActionListener(ls);
-        menu.add(item);
-        menu.addSeparator();
-        item=new JMenuItem("ÍË³ö(E)",KeyEvent.VK_E);
-        item.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E,ActionEvent.CTRL_MASK));
+		menu.add(item);
+		menu.addSeparator();
+		item = new JMenuItem("é€€å‡º(E)", KeyEvent.VK_E);
+		item.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, ActionEvent.CTRL_MASK));
 		item.addActionListener(ls);
-        menu.add(item);
+		menu.add(item);
 		menuBar.add(menu);
 
-		// ´´½¨¹¤¾ßÏä
+		// åˆ›å»ºå·¥å…·ç®±
 		JPanel ToolKit = new JPanel();
 		ToolKit.setLayout(new GridLayout(6, 1));
 		ToolKit.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
 
-		// ÉèÖÃ¹¦ÄÜÇøÊôĞÔ
-		Font font = new Font("ºÚÌå", Font.BOLD, 25);
-		JLabel text1 = new JLabel("¹¦ÄÜÇø", JLabel.CENTER);
+		// è®¾ç½®åŠŸèƒ½åŒºå±æ€§
+		Font font = new Font("é»‘ä½“", Font.BOLD, 25);
+		JLabel text1 = new JLabel("åŠŸèƒ½åŒº", JLabel.CENTER);
 		text1.setFont(font);
 		ToolKit.add(text1);
 		JPanel functionArea = new JPanel();
 		functionArea.setLayout(new GridLayout(3, 2, 30, 30));
-		String[] btnstr = { "Ñ¡Ôñ¹¤¾ß", "Ö±Ïß", "¾ØĞÎ", "Ô²", "ÎÄ±¾¿ò", "ÒÆ³ı"};
+		String[] btnstr = { "é€‰æ‹©å·¥å…·", "ç›´çº¿", "çŸ©å½¢", "åœ†", "æ–‡æœ¬æ¡†", "ç§»é™¤" };
 		for (int i = 0; i < btnstr.length; i++) {
 			JButton btn = new JButton(btnstr[i]);
 			functionArea.add(btn);
@@ -66,8 +67,8 @@ public class UI {
 		}
 		ToolKit.add(functionArea);
 
-		// ÉèÖÃÑÕÉ«ÇøÊôĞÔ
-		JLabel text2 = new JLabel("ÑÕÉ«Çø", JLabel.CENTER);
+		// è®¾ç½®é¢œè‰²åŒºå±æ€§
+		JLabel text2 = new JLabel("é¢œè‰²åŒº", JLabel.CENTER);
 		text2.setFont(font);
 		ToolKit.add(text2);
 		JPanel colorArea = new JPanel();
@@ -82,16 +83,16 @@ public class UI {
 		}
 		ToolKit.add(colorArea);
 
-		// ÉèÖÃÍ¼Ïñµ÷ÕûÇøÊôĞÔ
-		JLabel text3 = new JLabel("Í¼Ïñµ÷Õû", JLabel.CENTER);
+		// è®¾ç½®å›¾åƒè°ƒæ•´åŒºå±æ€§
+		JLabel text3 = new JLabel("å›¾åƒè°ƒæ•´", JLabel.CENTER);
 		text3.setFont(font);
 		ToolKit.add(text3);
 		JPanel enhanceArea = new JPanel();
-		enhanceArea.setLayout(new GridLayout(2,2,30,30));
-		JButton thicker = new JButton("¼Ó´Ö");
-		JButton thinner = new JButton("±äÏ¸");
-		JButton zoom_in = new JButton("·Å´ó");
-		JButton zoom_out = new JButton("ËõĞ¡");
+		enhanceArea.setLayout(new GridLayout(2, 2, 30, 30));
+		JButton thicker = new JButton("åŠ ç²—");
+		JButton thinner = new JButton("å˜ç»†");
+		JButton zoom_in = new JButton("æ”¾å¤§");
+		JButton zoom_out = new JButton("ç¼©å°");
 		thicker.addActionListener(ls);
 		thinner.addActionListener(ls);
 		zoom_in.addActionListener(ls);
@@ -102,13 +103,12 @@ public class UI {
 		enhanceArea.add(thinner);
 		ToolKit.add(enhanceArea);
 
-		// Ìí¼Ó»æÍ¼£¬¹¦ÄÜÇøºÍ²Ëµ¥À¸        
+		// æ·»åŠ ç»˜å›¾ï¼ŒåŠŸèƒ½åŒºå’Œèœå•æ 
 		mainFrame.add(menuBar, BorderLayout.NORTH);
 		mainFrame.add(canvas, BorderLayout.CENTER);
 		mainFrame.add(ToolKit, BorderLayout.EAST);
 
-		// ¿ªÆôÏÔÊ¾
+		// å¼€å¯æ˜¾ç¤º
 		mainFrame.setVisible(true);
 	}
 }
-

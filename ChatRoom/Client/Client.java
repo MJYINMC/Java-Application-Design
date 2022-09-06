@@ -5,12 +5,13 @@ import java.awt.*;
 import java.io.*;
 import java.net.*;
 
-interface Receiver extends Runnable{
+interface Receiver extends Runnable {
     void MsgRecv();
+
     void stopRecv();
 }
 
-public class Client extends JFrame{
+public class Client extends JFrame {
     private JTextField host;
     private JTextField port;
     private JButton connect;
@@ -30,36 +31,36 @@ public class Client extends JFrame{
     public Client() {
         host = new JTextField("127.0.0.1", 30);
         port = new JTextField("8080", 7);
-        connect = new JButton("½¨Á¢Á¬½Ó");
+        connect = new JButton("å»ºç«‹è¿žæŽ¥");
 
-        nickname = new JTextField("êÇ³Æ", 7);
+        nickname = new JTextField("æ˜µç§°", 7);
         message = new JTextField("Hello World!", 30);
-        send = new JButton("·¢ËÍÏûÏ¢");
-        
-        chatContext =  new JTextArea();
+        send = new JButton("å‘é€æ¶ˆæ¯");
+
+        chatContext = new JTextArea();
         scrollPanel = new JScrollPane(chatContext);
         scrollPanel.setPreferredSize(new Dimension(400, 500));
-        
+
         s = null;
         in = null;
         out = null;
         receiver = null;
     }
 
-    public void initUI(){
-		this.setSize(600, 800);
-		this.setLayout(new FlowLayout(FlowLayout.CENTER, 80, 20));
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    public void initUI() {
+        this.setSize(600, 800);
+        this.setLayout(new FlowLayout(FlowLayout.CENTER, 80, 20));
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         JPanel inputPanel = new JPanel();
-        inputPanel.setLayout(new  GridLayout(4,1));
-        inputPanel.add(new JLabel("·þÎñÆ÷µØÖ·", JLabel.LEFT));
+        inputPanel.setLayout(new GridLayout(4, 1));
+        inputPanel.add(new JLabel("æœåŠ¡å™¨åœ°å€", JLabel.LEFT));
         inputPanel.add(host);
-        inputPanel.add(new JLabel("¶Ë¿ÚºÅ", JLabel.LEFT));
+        inputPanel.add(new JLabel("ç«¯å£å·", JLabel.LEFT));
         inputPanel.add(port);
-        inputPanel.add(new JLabel("êÇ³Æ", JLabel.LEFT));
+        inputPanel.add(new JLabel("æ˜µç§°", JLabel.LEFT));
         inputPanel.add(nickname);
-        inputPanel.add(new JLabel("ÏûÏ¢", JLabel.LEFT));
+        inputPanel.add(new JLabel("æ¶ˆæ¯", JLabel.LEFT));
         inputPanel.add(message);
         this.add(inputPanel);
         this.add(connect);
@@ -68,70 +69,71 @@ public class Client extends JFrame{
         this.setVisible(true);
     }
 
-    void initLogic(){
+    void initLogic() {
         connect.addActionListener(e -> {
-            if(e.getActionCommand().equals("½¨Á¢Á¬½Ó")){
-                try{
+            if (e.getActionCommand().equals("å»ºç«‹è¿žæŽ¥")) {
+                try {
                     Integer.parseInt(port.getText());
-                    chatContext.append(String.format("³¢ÊÔÁ¬½Óµ½%s:%s\n", host.getText(), port.getText()));
+                    chatContext.append(String.format("å°è¯•è¿žæŽ¥åˆ°%s:%s\n", host.getText(), port.getText()));
                     chatContext.update(chatContext.getGraphics());
                     s = new Socket(host.getText(), Integer.parseInt(port.getText()));
                     in = new BufferedReader(
                             new InputStreamReader(
-                                s.getInputStream()));
+                                    s.getInputStream()));
                     out = new PrintStream(
                             s.getOutputStream());
 
                     receiver = new Thread(
-                        new Runnable(){
-                            public void run(){
-                                try {
-                                    while(true){
-                                        String line = in.readLine();
-                                        System.out.println(line);
-                                        if(line == null)
-                                            break;
-                                        else if(!line.equals(""))
-                                            chatContext.append(line+'\n');;
+                            new Runnable() {
+                                public void run() {
+                                    try {
+                                        while (true) {
+                                            String line = in.readLine();
+                                            System.out.println(line);
+                                            if (line == null)
+                                                break;
+                                            else if (!line.equals(""))
+                                                chatContext.append(line + '\n');
+                                            ;
+                                        }
+                                    } catch (IOException e) {
                                     }
-                                }catch(IOException e){
                                 }
-                            }
-                        }
-                    );
+                            });
                     receiver.start();
-                    chatContext.append("Á¬½Ó³É¹¦!\n");
-                    connect.setText("¶Ï¿ªÁ¬½Ó");
-                }catch (NumberFormatException ex){
-                    JOptionPane.showMessageDialog(this, "µØÖ·¸ñÊ½´íÎó!");
-                }catch (IOException ex) {
-                    JOptionPane.showMessageDialog(this, "Á¬½ÓÊ§°Ü!\n");
-                    chatContext.append("Á¬½ÓÊ§°Ü!\n");
+                    chatContext.append("è¿žæŽ¥æˆåŠŸ!\n");
+                    connect.setText("æ–­å¼€è¿žæŽ¥");
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(this, "åœ°å€æ ¼å¼é”™è¯¯!");
+                } catch (IOException ex) {
+                    JOptionPane.showMessageDialog(this, "è¿žæŽ¥å¤±è´¥!\n");
+                    chatContext.append("è¿žæŽ¥å¤±è´¥!\n");
                 }
-            }else{
-                try{
+            } else {
+                try {
                     s.close();
-                    chatContext.append("¶Ï¿ªÁ¬½Ó³É¹¦!\n");
-                    connect.setText("½¨Á¢Á¬½Ó");
+                    chatContext.append("æ–­å¼€è¿žæŽ¥æˆåŠŸ!\n");
+                    connect.setText("å»ºç«‹è¿žæŽ¥");
                     s = null;
                     in = null;
                     out = null;
-                }catch(Exception ex) {
-                    JOptionPane.showMessageDialog(this, "ÄÚ²¿´íÎó!\n");
-                    chatContext.append("¶Ï¿ªÁ¬½ÓÊ§°Ü!\n");
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(this, "å†…éƒ¨é”™è¯¯!\n");
+                    chatContext.append("æ–­å¼€è¿žæŽ¥å¤±è´¥!\n");
                 }
             }
         });
 
         send.addActionListener(e -> {
-            if(out != null){
-                out.println(nickname.getText()+": "+message.getText());
+            if (out != null) {
+                out.println(nickname.getText() + ": " + message.getText());
                 out.flush();
             }
         });
 
     }
-    public static void main(String[] args){
+
+    public static void main(String[] args) {
         Client myclient = new Client();
         myclient.initUI();
         myclient.initLogic();

@@ -3,31 +3,30 @@ import java.io.*;
 import java.util.ArrayList;
 import java.lang.Math;
 
-public class PaintCanvas extends Canvas{
-    
+public class PaintCanvas extends Canvas {
+
     private Image iBuffer;
     private Graphics2D gBuffer;
     private ArrayList<Shape> list = new ArrayList<Shape>();
     Shape selected;
 
-    
-    private void clear_buf(){
-        if(iBuffer == null){
+    private void clear_buf() {
+        if (iBuffer == null) {
             iBuffer = createImage(this.getSize().width, this.getSize().height);
             gBuffer = (Graphics2D) iBuffer.getGraphics();
         }
         gBuffer.setColor(getBackground());
-        gBuffer.fillRect(0, 0 , this.getSize().width, this.getSize().height);
+        gBuffer.fillRect(0, 0, this.getSize().width, this.getSize().height);
     }
 
-    private void draw_shapes(){
+    private void draw_shapes() {
         for (Shape entity : list) {
             entity.draw(gBuffer);
         }
-        if(selected != null){
+        if (selected != null) {
             final BasicStroke s = new BasicStroke(3.0f, BasicStroke.CAP_BUTT,
-            BasicStroke.JOIN_MITER, 10.0f, new float[] { 5, 5 }, 0.0f);
-            gBuffer.setStroke(s);            
+                    BasicStroke.JOIN_MITER, 10.0f, new float[] { 5, 5 }, 0.0f);
+            gBuffer.setStroke(s);
             gBuffer.setColor(Color.RED);
             gBuffer.drawRect(selected.anchor.x, selected.anchor.y, selected.width, selected.height);
         }
@@ -38,12 +37,12 @@ public class PaintCanvas extends Canvas{
         g.drawImage(iBuffer, 0, 0, this);
     }
 
-    public void check(Point p){
+    public void check(Point p) {
         clear_buf();
         selected = null;
 
         for (Shape entity : list) {
-            if(entity.InRegion(p)){
+            if (entity.InRegion(p)) {
                 selected = entity;
                 break;
             }
@@ -57,17 +56,17 @@ public class PaintCanvas extends Canvas{
         selected = null;
         clear_buf();
         draw_shapes();
-        repaint();    
+        repaint();
     }
 
-    public void drawing(Point start, Point end, ShapeType type, Color c, String input){
+    public void drawing(Point start, Point end, ShapeType type, Color c, String input) {
         clear_buf();
         gBuffer.setStroke(new BasicStroke(2.0f));
-        if(c==null)
+        if (c == null)
             gBuffer.setColor(Color.BLACK);
         else
             gBuffer.setColor(c);
-        Point anchor = new Point(Math.min(start.x, end.x), Math.min(start.y , end.y));
+        Point anchor = new Point(Math.min(start.x, end.x), Math.min(start.y, end.y));
         switch (type) {
             case LINE:
                 gBuffer.drawLine(start.x, start.y, end.x, end.y);
@@ -79,7 +78,7 @@ public class PaintCanvas extends Canvas{
                 gBuffer.drawOval(anchor.x, anchor.y, Math.abs(start.x - end.x), Math.abs(start.y - end.y));
                 break;
             case INPUTBOX:
-                Font font = new Font("ºÚÌå", Font.PLAIN, 20);
+                Font font = new Font("ÂºÃšÃŒÃ¥", Font.PLAIN, 20);
                 FontMetrics fm = gBuffer.getFontMetrics(font);
                 gBuffer.setFont(font);
                 gBuffer.drawString(input, end.x, end.y + fm.getHeight());
@@ -90,12 +89,12 @@ public class PaintCanvas extends Canvas{
         repaint();
     }
 
-
     public void add(Point start, Point end, ShapeType type, Color c, String input) {
-        Point anchor = new Point(Math.min(start.x, end.x), Math.min(start.y , end.y));
+        Point anchor = new Point(Math.min(start.x, end.x), Math.min(start.y, end.y));
         switch (type) {
             case LINE:
-                list.add(new Line(anchor, Math.abs(start.x - end.x), Math.abs(start.y - end.y), new Point(start), new Point(end), c));
+                list.add(new Line(anchor, Math.abs(start.x - end.x), Math.abs(start.y - end.y), new Point(start),
+                        new Point(end), c));
                 break;
             case RECT:
                 list.add(new Rectangle(anchor, Math.abs(start.x - end.x), Math.abs(start.y - end.y), c));
@@ -113,7 +112,7 @@ public class PaintCanvas extends Canvas{
 
     public void move(int dx, int dy) {
         clear_buf();
-        if(selected != null){
+        if (selected != null) {
             selected.move(dx, dy);
         }
         draw_shapes();
@@ -121,18 +120,18 @@ public class PaintCanvas extends Canvas{
     }
 
     public void move(Point start, Point end, boolean commit) {
-        if(selected != null){
+        if (selected != null) {
             clear_buf();
             selected.move(end.x - start.x, end.y - start.y);
             draw_shapes();
-            if(!commit)
+            if (!commit)
                 selected.move(start.x - end.x, start.y - end.y);
             repaint();
         }
     }
 
     public void set_color(Color c) {
-        if(selected != null){
+        if (selected != null) {
             clear_buf();
             selected.set_color(c);
             draw_shapes();
@@ -141,42 +140,44 @@ public class PaintCanvas extends Canvas{
     }
 
     public void thicker() {
-        if(selected != null){
+        if (selected != null) {
             clear_buf();
             selected.thicker();
             draw_shapes();
             repaint();
         }
     }
+
     public void thinner() {
-        if(selected != null){
+        if (selected != null) {
             clear_buf();
             selected.thinner();
             draw_shapes();
             repaint();
         }
     }
+
     public void zoom_in() {
-        if(selected != null){
+        if (selected != null) {
             clear_buf();
             selected.zoom_in();
             draw_shapes();
-            repaint();    
+            repaint();
         }
     }
 
     public void zoom_out() {
-        if(selected != null){
+        if (selected != null) {
             clear_buf();
             selected.zoom_out();
             draw_shapes();
-            repaint();    
+            repaint();
         }
     }
 
     public void remove() {
         clear_buf();
-        if(selected != null){
+        if (selected != null) {
             list.remove(selected);
             selected = null;
         }
@@ -184,7 +185,7 @@ public class PaintCanvas extends Canvas{
         repaint();
     }
 
-    public void open(File file) throws FileNotFoundException, IOException, ClassNotFoundException{
+    public void open(File file) throws FileNotFoundException, IOException, ClassNotFoundException {
         flush();
         ObjectInputStream in = new ObjectInputStream(new FileInputStream(file.getAbsolutePath()));
         list = (ArrayList<Shape>) in.readObject();
@@ -194,11 +195,10 @@ public class PaintCanvas extends Canvas{
         repaint();
     }
 
-    public void save(File file) throws FileNotFoundException, IOException{
+    public void save(File file) throws FileNotFoundException, IOException {
         ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file.getAbsolutePath()));
         out.writeObject(list);
         out.flush();
         out.close();
     }
 }
-
